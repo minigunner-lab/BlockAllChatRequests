@@ -23,11 +23,11 @@ setreadonly(mt, true)
 -- queue this script on teleport so it keeps blocking
 if syn and syn.queue_on_teleport then
     syn.queue_on_teleport([[
-        loadstring(game:HttpGet("https://pastebin.com/raw/yourScriptHere"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/minigunner-lab/BlockAllChatRequests/refs/heads/main/release"))()
     ]])
 elseif queue_on_teleport then
     queue_on_teleport([[
-        loadstring(game:HttpGet("https://pastebin.com/raw/yourScriptHere"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/minigunner-lab/BlockAllChatRequests/refs/heads/main/release"))()
     ]])
 end
 
