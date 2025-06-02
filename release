@@ -1,0 +1,34 @@
+--// block sendasync + teleport queueing
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+
+-- Hook __namecall to intercept SendAsync
+local mt = getrawmetatable(game)
+setreadonly(mt, false)
+
+local oldNamecall = mt.__namecall
+
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    if typeof(self) == "Instance" and self:IsA("RemoteEvent") and method == "SendAsync" then
+        warn("[💥BLOCKED] SendAsync call intercepted:", self:GetFullName())
+        return nil -- kill it w fire
+    end
+    return oldNamecall(self, ...)
+end)
+
+setreadonly(mt, true)
+
+-- queue this script on teleport so it keeps blocking
+if syn and syn.queue_on_teleport then
+    syn.queue_on_teleport([[
+        loadstring(game:HttpGet("https://pastebin.com/raw/yourScriptHere"))()
+    ]])
+elseif queue_on_teleport then
+    queue_on_teleport([[
+        loadstring(game:HttpGet("https://pastebin.com/raw/yourScriptHere"))()
+    ]])
+end
+
+print("[🧠🍳] SendAsync blocker loaded + teleport queue set.")
